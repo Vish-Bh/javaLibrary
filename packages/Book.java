@@ -2,7 +2,8 @@ package packages;
 import java.util.Set;
 import java.util.HashSet;
 
-
+//Methods implemented so far
+//addGenre, hasGenre, getInfo, getTitle, getAuthor, getPublicationYear, getRatings, getGenres
 
 public class Book {
     // Enum is a type that represents a fixed set of constants.
@@ -26,21 +27,22 @@ public class Book {
     
     
 //SOME CONSTRUCTORS 
-    public Book(String title, String author) {
-        this.title = title;
-        this.author = author;
-        this.publicationYear = 0;
-        this.ratings = 0.0f;
+    // public Book(String title, String author) {
+    //     this.title = title;
+    //     this.author = author;
+    //     this.publicationYear = 0;
+    //     this.ratings = 0.0f;
 
-    }
-    
-    public Book(String title, String author, int publicationYear) {
-        this.title = title;
-        this.author = author;
-        this.publicationYear = publicationYear;
-        this.ratings = 0.0f;
+    // }
+    //removing 
+    // public Book(String title, String author, int publicationYear) {
+    //     this.title = title;
+    //     this.author = author;
+    //     this.publicationYear = publicationYear;
+    //     this.ratings = 0.0f;
         
-    }
+    // }
+
     
     public Book(String title, String author, int publicationYear, float ratings, Genre... g) {
         this.title = title;
