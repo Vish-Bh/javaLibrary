@@ -1,6 +1,7 @@
 package  packages;
 import java.util.ArrayList;
 import packages.Book;
+import packages.Data;
 import java.util.Scanner;
 
 
@@ -10,13 +11,18 @@ import java.util.Scanner;
 public class Library{
     private ArrayList<Book> books;
     Scanner input = new Scanner(System.in);
+    public static void main(String[] args) {
+    // saveLibraryData(); 
+    System.out.println("Library MAIN FUNCTION.");  
+    }
     /// Create a new Array List to store books for eacch obj
     public Library() {
         books = new ArrayList<>();
-        preloadBooks(); 
+        loadLibraryData();
+        
     }
     //sample data to test
-    private void preloadBooks() {
+    public void preloadBooks() {
         books.add(new Book("The Hobbit", "J.R.R. Tolkien", 1937, 4.8f, Book.Genre.FANTASY, Book.Genre.ADVENTURE));
         books.add(new Book("Pride and Prejudice", "Jane Austen", 1813, 4.5f, Book.Genre.ROMANCE));
         books.add(new Book("Dune", "Frank Herbert", 1965, 4.7f, Book.Genre.SCIENCE_FICTION, Book.Genre.ACTION));
@@ -78,10 +84,20 @@ public class Library{
             i = input.nextInt();
         }
         input.nextLine(); 
+        if(searchBookByTitle(title)){
+            System.out.println("Book with this title already exists. Not adding duplicate.");
+            return;
+        }
         books.add(new Book(title, author, publishYear, ratings, genreList.toArray(new Book.Genre[0])));
     }
+
+
+    public ArrayList<Book> getBooks() {
+        return books;
+    }
     //Books are arraylist of book objects
-    public void getBooks() {
+    public void printBooksData() {
+        
         System.out.println("Retrieving all books from the database.");
         System.out.println(books);
         for (Book book : books) {
@@ -125,16 +141,23 @@ public class Library{
 
 
 
-    public void searchBookByTitle() {
+    public boolean searchBookByTitle() {
         System.out.print("Enter book title to search: ");
         String title = input.nextLine();
         for (Book book : books) {
             if (book.getTitle().equalsIgnoreCase(title)) {
                 System.out.println("Book found: " + book.getInfo());
-                return;
+                return true;
             }
         }
         System.out.println("Book not found in the library.");
-        return;
+        return false;
+    }
+    Data dataHandler = new Data();
+    public void saveLibraryData() {
+        dataHandler.saveData(this);
+    }
+    public void loadLibraryData() {
+        this.books = dataHandler.loadData();
     }
 }
