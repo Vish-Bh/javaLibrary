@@ -16,6 +16,9 @@ public class Main{
         System.out.println("Enter 3 to search a book by title.");
         System.out.println("Enter 4 to filter books by genre.");
         System.out.println("Enter 5 to remove a book by title.");
+        System.out.println("Enter 6 to save library data.");
+        System.out.println("Enter 7 to load library data.");
+        System.out.println("Enter 8  to load sample data into library.");
         System.out.println();
         int choice = input.nextInt();
         input.nextLine(); 
@@ -24,7 +27,7 @@ public class Main{
                 lib.addBook();
                 break;
             case 2:
-                lib.getBooks();
+                lib.printBooksData();
                 break;
             case 3:
                 lib.searchBookByTitle();
@@ -35,6 +38,16 @@ public class Main{
             case 5:
                 lib.removeBookByTitle();
                 break;
+            case 6:
+                lib.saveLibraryData();
+                break;
+            case 7:
+                lib.loadLibraryData();
+                break;
+            case 8:
+                lib.preloadBooks();
+                break;
+            
             default:
                 System.out.println("Invalid choice. Exiting.");
                 return;
@@ -53,6 +66,7 @@ public class Main{
         catch  (Exception e) {
             System.out.println("WHY u crached my program :< ");
             System.out.println("Something unexpected happen " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

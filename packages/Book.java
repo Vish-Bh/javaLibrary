@@ -2,10 +2,13 @@ package packages;
 import java.util.Set;
 import java.util.HashSet;
 
+import java.io.Serializable;
 //Methods implemented so far
 //addGenre, hasGenre, getInfo, getTitle, getAuthor, getPublicationYear, getRatings, getGenres
 
-public class Book {
+
+public class Book implements Serializable {
+        private static final long serialVersionUID = 1L; 
     // Enum is a type that represents a fixed set of constants.
     // Enum variables ka value un constants me se hi ho sakta hai.
     enum Genre {
