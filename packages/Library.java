@@ -10,19 +10,24 @@ import java.util.Scanner;
 //addBook, getBooks, searchBookByGenre, removeBookByTitle, searchBookByTitle,searchBookByGenre,
 //  saveLibraryData, loadLibraryData, updateBookData, printBooksData, preloadBooks
 public class Library{
+
     private ArrayList<Book> books;
     private Scanner input;
+    private Data dataHandler = new Data();
+
+    //Main Method for testing
     public static void main(String[] args) {
-    // saveLibraryData(); 
     System.out.println("Library MAIN FUNCTION.");  
     }
-    /// Create a new Array List to store books for eacch obj
+    
+    // Constructor
     public Library(Scanner input1) {
         input =input1;
         books = new ArrayList<>();
         loadLibraryData();
         
     }
+    
     //sample data to test
     public void preloadBooks() {
         books.add(new Book("The Hobbit", "J.R.R. Tolkien", 1937, 4.8f, Book.Genre.FANTASY, Book.Genre.ADVENTURE));
@@ -93,13 +98,9 @@ public class Library{
         books.add(new Book(title, author, publishYear, ratings, genreList.toArray(new Book.Genre[0])));
     }
 
-
-    public ArrayList<Book> getBooks() {
-        return books;
-    }
+    public ArrayList<Book> getBooks() {return books;   }
     //Books are arraylist of book objects
     public void printBooksData() {
-        
         System.out.println("Retrieving all books from the database.");
         System.out.println(books);
         for (Book book : books) {
@@ -137,28 +138,12 @@ public class Library{
         }
     }
 
-    public boolean searchBookByGenre(Book.Genre g) {
-        boolean flag=false;
-        for (Book book : books) {
-            if (book.hasGenre(g)) {
-                System.out.println("Book found: " + book.getInfo());
-                flag=true;
-            }
-            
-        }
-        if(!flag){
-            System.out.println("No Books founded");
-        }
-        return flag;
-    }
     public void removeBookByTitle() {
         System.out.print("Enter book title to remove: ");
         String title = input.nextLine();
         books.removeIf(book -> book.getTitle().equalsIgnoreCase(title));
         System.out.println("Book with title \"" + title + "\" has been removed from the library.");
     }
-
-
 
     public boolean searchBookByTitle() {
         System.out.print("Enter book title to search: ");
@@ -172,6 +157,7 @@ public class Library{
         System.out.println("Book not found in the library.");
         return false;
     }
+    
     public boolean searchBookByTitle(String title) {
         for (Book book : books) {
             if (book.getTitle().equalsIgnoreCase(title)) {
@@ -182,6 +168,7 @@ public class Library{
         System.out.println("Book not found in the library.");
         return false;
     }
+    
     public boolean updateBookData(String title, Book updatedBook) {
         for (int i = 0; i < books.size(); i++) {
             if (books.get(i).getTitle().equalsIgnoreCase(title)) {
@@ -194,12 +181,11 @@ public class Library{
         return false;
     }
 
-
-    Data dataHandler = new Data();
     public void saveLibraryData() {
-        dataHandler.saveData(this);
+        dataHandler.saveBooks(this.books);
     }
+    
     public void loadLibraryData() {
-        this.books = dataHandler.loadData();
+        this.books.addAll(dataHandler.loadBooks());
     }
 }

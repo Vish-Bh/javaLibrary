@@ -1,37 +1,48 @@
 package packages;
-import packages.Book;
-import packages.Library;
-import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
-public class Data{
-    public void saveData(Library lib){
-        try{
-            FileOutputStream fos = new FileOutputStream("data/books.ser");
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(lib.getBooks());
-            oos.close();
-            fos.close();
-            System.out.println("Library data saved successfully.");
-        }catch(Exception e){
-            System.out.println("Error saving library data: " + e.getMessage());
+import java.io.*;
+import java.util.ArrayList;
+
+public class Data {
+
+    private void ensureDir() {
+        new File("data").mkdirs();
+    }
+
+    public void saveBooks(ArrayList<Book> books) {
+        saveObject("data/books.ser", books, "books");
+    }
+
+    public void saveMembers(ArrayList<Member> members) {
+        saveObject("data/members.ser", members, "members");
+    }
+
+    public ArrayList<Book> loadBooks() {
+        return (ArrayList<Book>) loadObject("data/books.ser", "books");
+    }
+
+    public ArrayList<Member> loadMembers() {
+        return (ArrayList<Member>) loadObject("data/members.ser", "members");
+    }
+
+    private void saveObject(String path, Object obj, String label) {
+        ensureDir();
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path))) {
+            oos.writeObject(obj);
+            System.out.println(label + " data saved.");
+        } catch (Exception e) {
+            System.out.println("Error saving " + label + " data: " + e.getMessage());
         }
     }
-    public ArrayList<Book> loadData(){
-        ArrayList<Book> books = new ArrayList<>();
-        try{
-            FileInputStream fis = new FileInputStream("data/books.ser");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            books = (ArrayList<Book>) ois.readObject();
-            ois.close();
-            fis.close();
-            System.out.println("Library data loaded successfully.");
-        }catch(Exception e){
-            System.out.println("Error loading library data: " + e.getMessage());
+
+    private Object loadObject(String path, String label) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path))) {
+            Object data = ois.readObject();
+            System.out.println(label + " data loaded.");
+            return data;
+        } catch (Exception e) {
+            System.out.println("Error loading " + label + " data: " + e.getMessage());
+            return new ArrayList<>();
         }
-        return books;
     }
 }
