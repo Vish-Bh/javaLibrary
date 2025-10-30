@@ -186,6 +186,6 @@ public class Library{
     }
     
     public void loadLibraryData() {
-        this.books.addAll(dataHandler.loadBooks());
+        this.books=(dataHandler.loadBooks());
     }
 }

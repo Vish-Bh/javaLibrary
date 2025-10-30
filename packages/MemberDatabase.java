@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import packages.Data;
 //Methods to implement
-// addMember, removeMemberById interactive and no, searchMemberById, updateMemberById, printMembers
+// addMember, removeMemberById interactive and no, searchMember, updateMemberById, printMembers
 public class MemberDatabase{
     private Scanner input;
     Data data = new Data();
@@ -17,7 +17,7 @@ public class MemberDatabase{
     //Constructor
     public MemberDatabase(Scanner input1){
         input = input1;
-        memberList= new ArrayList<>();
+        memberList=data.loadMembers();
     }
     
     public void addMember(){
@@ -29,24 +29,35 @@ public class MemberDatabase{
     System.out.print("Enter Member pin: ");
     int pin = input.nextInt();
     input.nextLine();
-    if (searchMemberById(memberId)){
+    Member m = searchMember(memberId);
+    if (m!=null){ 
         System.out.println("Member with this ID already exists. Cannot add duplicate member.");
         return;
     }
     memberList.add( new Member(name, memberId, pin));
     }
 
-    public boolean searchMemberById(int memberId){
+    public Member searchMember(int memberId){
         for(Member m: memberList){
             if(m.getMemberId()==memberId){
                 System.out.println("Member found: "+m);
-                return true;
+                return m;
             }
         }
         System.out.println("No member found with this ID");
-        return false;
+        return null;
     }
-    
+
+    public Member searchMember(String memberName){
+        for (Member m : memberList){
+            if (m.getName().equalsIgnoreCase(memberName)){
+                return m;
+            }
+        }
+        System.out.println("No Member with name "+ memberName);
+        return null;
+    }
+
     public void updateMemberById(int id){
         for(Member m: memberList){
             if(m.getMemberId()==id){
@@ -96,8 +107,9 @@ public class MemberDatabase{
         System.out.println("MemberData Saved!");
     }
 
+
     public void loadMemberDatabase(){
-        this.memberList.addAll(data.loadMembers());
+        this.memberList=(data.loadMembers());
     }
 
 

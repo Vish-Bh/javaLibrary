@@ -1,11 +1,9 @@
 package packages;
 import java.util.Set;
 import java.util.HashSet;
-
 import java.io.Serializable;
 //Methods implemented so far
 //addGenre, hasGenre, getInfo, getTitle, getAuthor, getPublicationYear, getRatings, getGenres
-
 
 public class Book implements Serializable {
     private static final long serialVersionUID = 1L; 
@@ -16,8 +14,7 @@ public class Book implements Serializable {
         ROMANCE,
         SCIENCE_FICTION,
         ADVENTURE,
-        ACTION
-    }
+        ACTION}
     // My Book properties
     //
     private String title;
@@ -25,6 +22,7 @@ public class Book implements Serializable {
     private int publicationYear;
     private float ratings;
     private Set<Genre> genres = new HashSet<>();
+    private boolean isBorrowed=false;
     
     //Constructor    
     public Book(String title, String author, int publicationYear, float ratings, Genre... g) {
@@ -36,8 +34,6 @@ public class Book implements Serializable {
             this.addGenre(genre);
         }
     }
-    
-    
     //Basic Getters
     public void addGenre(Genre g) { genres.add(g); }
 
@@ -53,7 +49,15 @@ public class Book implements Serializable {
     public int getPublicationYear() {return publicationYear;}       
     
     public float getRatings() {return ratings;}
+
+    public void borrowing(){
+        this.isBorrowed=true;
+    }
     
+    public void returning(){
+        this.isBorrowed=false;
+    }
+
     public Set<Genre> getGenres() {return genres;    }
 
 }
