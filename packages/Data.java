@@ -4,6 +4,8 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Data {
+    public Data(){
+    }
 
     private void ensureDir() {
         new File("data").mkdirs();

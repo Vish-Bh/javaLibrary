@@ -4,10 +4,10 @@ public class Test{
     public static final Scanner input = new Scanner(System.in);
     public static void main(String[] args) {
         try{
-
-        Library lib = new Library(input);
-        MemberDatabase memberDb = new MemberDatabase(input);
-        Auth auth = new Auth(memberDb);
+            Auth auther = new Auth();
+            MemberDatabase memberDb = new MemberDatabase(input,auther);
+            auther.setMemberDatabase(memberDb);
+            Library lib = new Library(input,auther);
         
         boolean whileFlag=true;
         while(whileFlag){
@@ -29,11 +29,15 @@ public class Test{
         System.out.println("Enter 16 to login");
         System.out.println("Enter 17 to logout");
         System.out.println("Enter 18 to see the current user");
+        System.out.println("19 to creat a admin member");
         System.out.println("Enter 999 to exit.");
         System.out.println();   
         int choice = input.nextInt();
         input.nextLine(); 
         switch(choice){
+            case 19:
+                memberDb.addMember(false);
+                break;
             case 1:
                 lib.addBook();
                 break;
@@ -94,18 +98,18 @@ public class Test{
                 boolean a=s.matches("\\d+");
                 if (a){
                     int id = Integer.parseInt(s);
-                    auth.logIn(id, pin);
+                    auther.logIn(id, pin);
                     break;
                 }   
-                auth.logIn(s, pin);
+                auther.logIn(s, pin);
                 break;
             
             case 17:
-                auth.logOut();
+                auther.logOut();
                 break;
             
             case 18:
-                auth.getCurrentUser();
+                auther.getCurrentUser();
                 break;
             
             case 999:

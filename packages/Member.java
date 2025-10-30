@@ -5,16 +5,12 @@ import java.io.Serializable;
 
 public class Member implements Serializable {
 
-    enum AccessLevel{
-        L1,
-        L3,
-        L5
-    }
+    
     private static final long serialVersionUID = 1L;
     private String name;
     private int memberId;
     private int pin;
-    private AccessLevel accessLevel =AccessLevel.L1;
+    private int accessLevel =1;
     private ArrayList<Book> borrowedBooks = new ArrayList<>();
     
     //Constructor
@@ -27,7 +23,7 @@ public class Member implements Serializable {
         if(isAdmin){this.name = name;
         this.memberId = memberId;
         this.pin=pin;
-        this.accessLevel=AccessLevel.L5; }
+        this.accessLevel= 5; }
         else{
             this.name = name;
         this.memberId = memberId;
@@ -73,9 +69,18 @@ public class Member implements Serializable {
         this.name = name;
     }
 
-    public void setAccessLevel(AccessLevel accessLevel) {
-        this.accessLevel = accessLevel;
+    public void setAccessLevel(int al) {
+    if (al == 1 || al == 3 || al == 5){
+        this.accessLevel = al;
+        return ;
     }
+    
+    System.out.println("Invalid access level");
+    }
+    public int getAccessLevel() {
+return accessLevel;
+}
+
     
     //When a member object is printed, this method is called
     //Example System.out.println(memberObject);
